@@ -1,0 +1,40 @@
+REST api design pattern
+
+representational state transfer
+
+most popular api pattern
+
+combines verbs, route paths and our data
+
+REST determines how api looks like
+
+What we do in it is :
+
+we have main list that can be orders, customers, items, or in our case tasks
+
+and then to get data, we use get method, to send data, we use same route with post method
+
+For individual items, we follow the same path and then we just use params to point to that one specific item and then use different methods to perform actions on that item
+
+get
+post	- for creation
+put/patch	- for updation
+delete
+
+CRUD : Create Read Update Delete
+
+MongoDB:
+NoSQL, Non Relational Database
+we can store everything as json
+instead of tables, we have collections which represent group of items
+instead of rows, we have documents which represents single item
+document is a set of key, value pairs
+
+mongodb:
+npm install mongodb is used to install the MongoDB driver for Nodejs
+The MongoDB driver allows us to interact with MongoDB databases from our Node.js application
+
+mongoose:
+it is a object data modelling library. It comes with gui which makes it easier.
+
+it does all heavy lifting for us
