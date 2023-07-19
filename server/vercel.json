@@ -6,6 +6,9 @@
       "use": "@vercel/node"
     }
   ],
+  "env": {
+    "MONGO_URI": "mongodb+srv://Sahil:JohnDoe@task-manager.xplk3jk.mongodb.net/Task_Data?retryWrites=true&w=majority"
+  },
   "routes": [
     {
       "src": "/(.*)",
