@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { SERVER_URL } from "../constants";
 import { toast } from "react-toastify";
 import { useStoreActions } from "easy-peasy";
 
 function Header() {
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL;
   const { increment } = useStoreActions((actions) => actions.counter);
   const [name, setName] = useState("");
   const nameChangeHandler = (e) => {

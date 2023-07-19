@@ -2,12 +2,12 @@ import React from "react";
 import edit from "../icons/editing.png";
 import deleteIcon from "../icons/delete.png";
 import { Link } from "react-router-dom";
-import { SERVER_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useStoreActions } from "easy-peasy";
 
 function Card({ id, name, completed }) {
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL;
   const { increment } = useStoreActions((actions) => actions.counter);
   const deleteHandler = () => {
     axios

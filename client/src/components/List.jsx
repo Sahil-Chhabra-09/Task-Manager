@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
-import { SERVER_URL } from "../constants";
 import { toast } from "react-toastify";
 import { useStoreState } from "easy-peasy";
 
 function List() {
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
   const counter = useStoreState((state) => state.counter.value);
   const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ function List() {
           <p>Loading ...</p>
         ) : (
           <div className="mt-2 space-y-2">
-            {allData.map((data) => {
+            {allData?.map((data) => {
               return (
                 <Card
                   key={data._id}

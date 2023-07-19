@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { SERVER_URL } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useStoreActions } from "easy-peasy";
 
 function Edit() {
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
   const { increment } = useStoreActions((actions) => actions.counter);
   const navigate = useNavigate();
   const { id } = useParams();
