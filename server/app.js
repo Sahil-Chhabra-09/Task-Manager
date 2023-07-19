@@ -1,16 +1,17 @@
 const express = require("express");
+const connectDB = require("./db/connect");
+require("dotenv").config();
+const cors = require("cors");
 const app = express();
 const port = 3001;
 const tasks = require("./routes/tasks");
-const connectDB = require("./db/connect");
-require("dotenv").config();
 const MONGO_URI = process.env.MONGO_URI;
 
 //middleware
 app.use(express.json()); //to get the data that will be sent, if we don't use it we won't have the data in req.body
-
+app.use(cors()); //to enable Cross-Origin Resource Sharing
 app.get("/", (req, res) => {
-  res.send("Hey there you");
+  res.status(200).json({ ping: "pong" });
 });
 
 app.use("/api/v1/tasks", tasks);

@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { SERVER_URL } from "../constants";
+import { toast } from "react-toastify";
+import { useStoreActions } from "easy-peasy";
 
 function Header() {
+  const { increment } = useStoreActions((actions) => actions.counter);
+  const [name, setName] = useState("");
+  const nameChangeHandler = (e) => {
+    setName(e.target.value);
+  };
   const submitHandler = () => {
-    console.log("Handle submit");
+    axios
+      .post(SERVER_URL, { name })
+      .then(() => {
+        toast.success("Task created successfully");
+        increment();
+      })
+      .catch((error) => {
+        toast.error("Failed to add data");
+        console.error({ msg: error });
+      })
+      .finally(() => {
+        setName("");
+      });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      submitHandler();
+    }
   };
   return (
     <div className="h-max shadow-lg hover:shadow-xl w-2/3 p-6 space-y-2">
@@ -12,6 +39,9 @@ function Header() {
           type="text"
           placeholder="e.g. wash dishes"
           className="border-2 border-slate-600 w-full h-8 p-2 md:w-2/3 md:mx-auto md:block mb-2"
+          value={name}
+          onChange={nameChangeHandler}
+          onKeyDown={handleKeyDown}
         ></input>
         <button
           type="submit"
