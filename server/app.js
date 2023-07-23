@@ -6,6 +6,7 @@ const app = express();
 const port = 3001;
 const tasks = require("./routes/tasks");
 const MONGO_URI = process.env.MONGO_URI;
+const notFound = require("./middleware/notfound");
 
 //middleware
 app.use(express.json()); //to get the data that will be sent, if we don't use it we won't have the data in req.body
@@ -22,9 +23,7 @@ app.use("/api/v1/tasks", tasks);
 // -update task
 // -delete task
 
-app.all("*", (req, res) => {
-  res.status(404).send("No such route");
-});
+app.use("*", notFound);
 
 const start = async () => {
   try {

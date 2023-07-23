@@ -29,12 +29,12 @@ function Card({ id, name, completed }) {
         </p>
         <div className="flex float-right space-x-2">
           <Link to={`/edit/${id}`}>
-            <img src={edit} alt="edit" className="h-6 hover:bg-green-300"></img>
+            <img src={edit} alt="edit" className="h-6 hover:opacity-60"></img>
           </Link>
           <img
             src={deleteIcon}
             alt="delete"
-            className="h-6 hover:bg-red-300"
+            className="h-6 cursor-pointer hover:opacity-60"
             onClick={deleteHandler}
           ></img>
         </div>

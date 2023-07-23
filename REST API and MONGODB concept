@@ -1,3 +1,14 @@
+Basic Setup Steps:
+
+- Create a basic server
+- Create a middleware that sits on the one route you decide
+- define routes in that middleware
+- define requests along with controllers
+- connect with mongodb
+  The collection name can be customized in the connection string
+- setup a schema and then setup the model and export it
+- import the model in controllers, use queries on that model for various functionalities
+
 REST api design pattern
 
 representational state transfer
@@ -17,8 +28,8 @@ and then to get data, we use get method, to send data, we use same route with po
 For individual items, we follow the same path and then we just use params to point to that one specific item and then use different methods to perform actions on that item
 
 get
-post	- for creation
-put/patch	- for updation
+post - for creation
+put/patch - for updation
 delete
 
 CRUD : Create Read Update Delete
@@ -38,3 +49,51 @@ mongoose:
 it is a object data modelling library. It comes with gui which makes it easier.
 
 it does all heavy lifting for us
+
+## Now, we have our whole application, all that is left to do is optimize it, optimization topics:
+
+- PUT VS PATCH : It's just more like a guidline as it is generally expected that put is basically replacing the data with the newer one and patch is something which does not alter the data and just updates the info passed.
+
+  Although the functionality can be as we want by using different mongoose queries internally, i.e. in findOneAndUpdate, we can just pass a parameter overwrite = true, which will work as one expects put request works
+
+- Different Response Style : We can custom pass certain properties like status : success, amount : tasks.length and all that as response
+
+  A good practice is to return the data with a key named "data" as axios automatically returns a data object in it's call
+
+- Route not found: good to have
+
+- Async Wrappers for try/catch : Instead of having try and catch block defined for each controller individually, we can setup another middleware
+
+  The basic idea is, instead of try and catch block for each controller, what we can do is define another middleware named AsyncWrapper, and in that we pass our async function, in that, it waits for the function to complete, if it does not, then we call another middleware named next so basically it is something like:
+
+  ```
+  request -> router -> route -> method -> controller -> asyncWrapper -> functioncall -> if(success : end peacefully, failure : next(error))
+  ```
+
+  This is helpful when our catch blocks all contain same functionality and instruction on how to handle error, but when we need to customize it it is not that useful
+
+  If we don't define the next middleware, express comes with a default error handler
+
+  To define custom error middleware, we just have to pass it 4 parameters with the first one being error.
+
+  and then we just do app.use(errorHandler)
+
+  now whenever we do next(), it will mean our middleware
+
+- 404 Custom errors : We can customize the 404 response as :
+
+  ```
+  const error = new Error("Not found");
+  error.status = 404;
+  return next(error)
+  ```
+
+  Through this, it can help in customization of the error
+
+  The thing is everything discussed are enhancements and nothing else.
+
+- Port Variable String : The port on which it is setup when hosted is ofcourse different hence, we select port as :
+
+  const port = process.env.PORT || 3000
+
+  app.listen(port, () => {})
